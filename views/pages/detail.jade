@@ -1,0 +1,24 @@
+extends ../layout
+
+block content
+	.container
+		.row
+			each item in movies
+				.col-md-7
+					embed(src="#{movie.flash}", allowFullScreen="true", quality="heigh", 
+						width="720", height="600", align="middle",type="application/x-shockwave-flash")
+				.col-md-5
+					dl.dl-horizontal
+					dt Film Name
+					dd = movie.title
+					dt = Directory 
+                                        dd = movie.directory
+					dt Country
+                                        dd = movie.country
+					dt Language
+                                        dd = movie.language
+					dt Year
+                                        dd = movie.year
+					dt plot
+					dd = movie.plot
+
