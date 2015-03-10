@@ -10,7 +10,7 @@ block content
 						th Directory
 						th County
 						th Year
-						th Log
+						//- th Log
 						th See
 						th Update
 						th Delete
@@ -21,7 +21,7 @@ block content
 						td #{item.directory}
 						td #{item.country}
 						td #{item.year}
-						td #{moment(item.meta.createdAt).format('MM/DD/YYYY')}
+						//- td #{moment(item.meta.createdAt).format('MM/DD/YYYY')}
 						td : a(target="_blank", href="../movie/#{item._id}") Check
 						td:  a(target="_blank", href="../admin/updatemovie/#{item._id}") Update
 						td
