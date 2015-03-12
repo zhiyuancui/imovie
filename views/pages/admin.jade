@@ -8,8 +8,37 @@ block content
 				.form-group
 					label.col-sm-3.control-label(for="inputTitle") Film Name
 					.col-sm-10
-						input#inputTitle.form-control(type="text", name="movie{title}", value="#{movie.title}")
-				
-
-
+						input#inputTitle.form-control(type="text", name="movie[title]", value="#{movie.title}")
+				.form-group
+					label.col-sm-3.control-label(for="inputDirector") Director
+					.col-sm-10
+						input#inputDirector.form-control(type="text", name="movie[dicrector]", value="#{movie.director}")
+				.form-group
+					label.col-sm-3.control-label(for="inputCOuntry") Country
+					.col-sm-10
+						input#inputCountry.form-control(type="text", name="movie[country]", value="#{movie.country}")
+				.form-group
+					label.col-sm-3.control-label(for="inputLanguage") Language
+					.col-sm-10
+						input#inputLanguage.form-control(type="text", name="movie[language]", value="#{movie.language}")
+				.form-group
+					label.col-sm-3.control-label(for="inputPoster") Poster
+					.col-sm-10
+						input#inputPoster.form-control(type="text", name="movie[poster]", value="#{movie.poster}")
+				.form-group
+					label.col-sm-3.control-label(for="inputFlash") Flash
+					.col-sm-10
+						input#inputFlash.form-control(type="text", name="movie[flash]", value="#{movie.flash}")
+				.form-group
+					label.col-sm-3.control-label(for="inputYear") Year
+					.col-sm-10
+						input#inputYear.form-control(type="text", name="movie[year]", value="#{movie.year}")
+				.form-group
+					label.col-sm-3.control-label(for="inputPlot") Plot
+					.col-sm-10
+						input#inputPlot.form-control(type="text", name="movie[plot]", value="#{movie.plot}")
+				.form-group
+					.col-sm-offset-2.col-sm-10
+					button.btn.btn-default(type="submit") Submit
+		
 

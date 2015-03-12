@@ -3,6 +3,8 @@ var path	= require('path');
 var mongoose 	= require('mongoose')
 var port	= process.env.PORT || 8000;
 var app		= express();
+var bodyParser  = require('body-parser');
+
 var Movie	= require('./models/movie')
 var _		= require('underscore')
 
@@ -13,6 +15,8 @@ mongoose.connect('mongodb://localhost/imovie')
 app.set('views','./views/pages');
 app.set('view engine','jade');
 app.use(express.static(path.join(__dirname,'bower_components')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
 app.listen(port);
 
 console.log('server start on port: ' + port);
@@ -25,14 +29,14 @@ console.log('server start on port: ' + port);
 // index page
 app.get('/', function(req, res){
 	Movie.fetch(function(err, movies) {
-	  if(err)
-	  {
-		console.log(err)
-	  }
+		if(err)
+	  	{
+			console.log(err)
+	  	}
 		res.render('index', 
-		{
-	 	title: 'Front Page', 
-	 	movies: movies	
+			{
+	 		title: 'Front Page', 
+	 		movies: movies	
 		})
 	})
 })
@@ -42,20 +46,21 @@ app.get('/movie/:id', function(req, res){
         var id = req.params.id
 	
 	Movie.findById(id, function (err, movie) {
+		console.log(movie);
 		res.render('detail', {
-			title: 'Detail Page' * movie.title,
+			title: 'Detail Page' + movie.title,
 			movie: movie
-})
-})
+		})
+	})
 }) 
 
 //admin page
-app.get('/admin', function(req, res){
+app.get('/admin/movie', function(req, res){
         res.render('admin', 
         {
          title: 'Admin Page',
 	 movie:{
-	  title: '',
+	  tittle: '',
 	  directory: '',
 	  country:'',
 	  year:'',
@@ -87,11 +92,12 @@ app.get('/admin/update/:id', function(req, res){
 
 
 //admin post movie
-app.post('/admin/movie/new' , function(res,res){
+app.post('/admin/movie/new' , function(req,res){
 	var id = req.body.movie._id
-	var movieObject = req.body.movie
+
+	var movieObj = req.body.movie
 	var _movie
-	
+	console.log(id)	
 	if (id !== 'undefined'){
 		Movie.findById(id, function(err, movie){
 		if (err)
@@ -101,39 +107,36 @@ app.post('/admin/movie/new' , function(res,res){
 		_movie = _.extend(movie, movieObj)
 		_movie.save(function(err, movie){
 			if(err){
-			console.log(err)
+				console.log(err)
 			}
 			res.redirect('/movie/' + movie._id)
 
-})	
+			})	
 
 		})
 
 	}
 	else{
 	_movie = new Movie({
-	  directory: movieObj.directory,
+	  directory: movieObj.director,
 	  title:     movieObj.title,
 	  country:   movieObj.country,
 	  language:  movieObj.language,
 	  year:      movieObj.year,
-	  poster:     movieObj.poster,
+	  poster:    movieObj.poster,
 	  plot:	     movieObj.plot,
 	  flash:     movieObj.flash,
 	})
 
 	_movie.save(function(err, movie){
                if(err){
-               console.log(err)
+               		console.log(err)
               	}
                 res.redirect('/movie/' + movie._id)
 
-		})
+	})
 
 	}
-
-
-
 })
 
 
@@ -148,10 +151,12 @@ app.get('/admin/list', function(req, res){
           {
                 console.log(err)
           }
-                res.render('index',
-                {
-                title: 'List Page',
+          res.render('index',
+          {
+		title: 'List Page',
                 movies: movies
-                })
+          })
         })
-})	
+})
+
+	
